@@ -19,3 +19,10 @@ __fastcall TForm5::TForm5(TComponent* Owner)
 
 
 
+void __fastcall TForm5::FormClose(TObject *Sender, TCloseAction &Action)
+{
+ListView2->Items->Clear();
+
+}
+//---------------------------------------------------------------------------
+

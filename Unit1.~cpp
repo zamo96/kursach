@@ -10,22 +10,30 @@
 #include "Unit1.h"
 #include <Math.hpp>
 #include <string>
+#include <Dialogs.hpp>
+
 
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
-TForm1 *Form1;
+TSalaries_of_employees *Salaries_of_employees;
 
 
 
 //--------------------------------------------------------------------------
+     int counter = 0;
+     int selected;
+     int cgounter_for_id = 0;
      int massiv_for_id [20];
         int gcount = 0;
      int id_counter = 0;
       int pp = 0;
       int number_id=0;
        bool rev=true;
+       int nrec2 = 0;
     int ColumnToSort;
+
+
     typedef struct
 {
  char surname[16];
@@ -38,42 +46,11 @@ TForm1 *Form1;
 }C;
 C dat[10];
 
-typedef struct
-{
- int Jan;
- int Feb;
- int Mar;
- int Apr;
- int May;
-}D;
-  D ZP[100];
 
 
-  typedef struct
-{
-   char Surname[16];
-   char Name[16];
-   char Otchestvo[16];
-   long Zarplata;
-   char Rejim[16];
-   char Doljnost[16];
-   int id;
-} A;
-
-A data[100];
 
 
- typedef struct
-{
-   char Surname[16];
-   char Name[16];
-   char Otchestvo[16];
-   long Zarplata;
-   char Rejim[16];
-   char Doljnost[16];
-} B;
 
-B empt[100];
 int nrec = 0;
 
 char DOL[16];
@@ -86,201 +63,9 @@ float AVE_REZ;
 long SUM_REZ;
 bool B_REZ;
 
-  /* void TForm1::search() {
-char y[16] ;
- strcpy(y,Edit7->Text.c_str());
-        if (ComboBox5->Text == "По Фамилии")
-        {
-             for(int i = 0 ; i<=nrec;)
-             {
-                POINT3:
-                for(int o = 0 ; o<16;)
-                {
-                POINT1:
-                if (data[i].Surname[o+1] == '\0')
-                  {
-                strcpy(empt[0].Surname,data[i].Surname);
-                strcpy(empt[0].Name,data[i].Name);
-                strcpy(empt[0].Otchestvo,data[i].Otchestvo);
-                empt[0].Zarplata = data[i].Zarplata;
-                goto POINT2;
-                           }
-
-                 if (data[i].Surname[o] == y[o])
-                 {
-                 //ShowMessage(data[i].Surname[o]) ;
-                 ++o;
-                 goto POINT1;
-                 }
-
-                 else if (data[i].Surname[o] != y[o])
-                 {
-                 i++;
-                 goto POINT3;
-                 }
-                 }
-     POINT2:
-     char buf[16];
-     strcpy(buf,empt[0].Surname);
-     Edit8->Text = buf;
-     strcpy(buf,empt[0].Name)  ;
-     Edit9->Text = buf;
-     strcpy(buf,empt[0].Otchestvo);
-     Edit10->Text = buf;
-     long d = empt[0].Zarplata;
-     Edit11->Text = d;
-     ListView1->SetFocus();
-        ListView1->Items->Item[i]->Selected=true;
-          break;
-         }
-
-          }
 
 
-          if (ComboBox5->Text == "По Имени")
-{
-             for(int i = 0 ; i<=nrec;)
-{
-                POINT4:
-                for(int o = 0 ; o<16;)
-                {
-                POINT6:
-                if (data[i].Name[o+1] == '\0')
-                  {
-                strcpy(empt[0].Surname,data[i].Surname);
-                strcpy(empt[0].Name,data[i].Name);
-                strcpy(empt[0].Otchestvo,data[i].Otchestvo);
-                empt[0].Zarplata = data[i].Zarplata;
-                goto POINT5;
-                           }
-
-                 if (data[i].Name[o] == y[o])
-                 {
-                 //ShowMessage(data[i].Surname[o]) ;
-                 ++o;
-                 goto POINT6;
-                 }
-
-                 else if (data[i].Name[o] != y[o])
-                 {
-                 i++;
-                 goto POINT4;
-                 }
-                 }
-
-     POINT5:
-     char buf[16];
-     strcpy(buf,empt[0].Surname);
-     Edit8->Text = buf;
-     strcpy(buf,empt[0].Name)  ;
-     Edit9->Text = buf;
-     strcpy(buf,empt[0].Otchestvo);
-     Edit10->Text = buf;
-     long d = empt[0].Zarplata;
-     Edit11->Text = d;
-     ListView1->SetFocus();
-        ListView1->Items->Item[i]->Selected=true;
-          break;
-         }
-
-          }
-
-          if (ComboBox5->Text == "По Отчеству")
-{
-             for(int i = 0 ; i<=nrec;)
-{
-                POINT7:
-                for(int o = 0 ; o<16;)
-                {
-                POINT8:
-                if (data[i].Otchestvo[o+1] == '\0')
-                  {
-                strcpy(empt[0].Surname,data[i].Surname);
-                strcpy(empt[0].Name,data[i].Name);
-                strcpy(empt[0].Otchestvo,data[i].Otchestvo);
-                empt[0].Zarplata = data[i].Zarplata;
-                goto POINT9;
-                           }
-
-                 if (data[i].Otchestvo[o] == y[o])
-                 {
-                 //ShowMessage(data[i].Surname[o]) ;
-                 ++o;
-                 goto POINT8;
-                 }
-
-                 else if (data[i].Otchestvo[o] != y[o])
-                 {
-                 i++;
-                 goto POINT7;
-                 }
-                 }
-
-     POINT9:
-     char buf[16];
-     strcpy(buf,empt[0].Surname);
-     Edit8->Text = buf;
-     strcpy(buf,empt[0].Name)  ;
-     Edit9->Text = buf;
-     strcpy(buf,empt[0].Otchestvo);
-     Edit10->Text = buf;
-     long d = empt[0].Zarplata;
-     Edit11->Text = d;
-     ListView1->SetFocus();
-        ListView1->Items->Item[i]->Selected=true;
-          break;
-         }
-
-          }
- /* for(int i = 0 ; i<=nrec;)
-{
-                POINT3:
-                for(int o = 0 ; o<16;)
-                {
-                POINT1:
-                if (data[i].Surname[o+1] == '\0')
-                  {
-                strcpy(empt[0].Surname,data[i].Surname);
-                strcpy(empt[0].Name,data[i].Name);
-                strcpy(empt[0].Otchestvo,data[i].Otchestvo);
-                empt[0].Zarplata = data[i].Zarplata;
-                goto POINT2;
-                           }
-
-                 if (data[i].Surname[o] == y[o])
-                 {
-                 //ShowMessage(data[i].Surname[o]) ;
-                 ++o;
-                 goto POINT1;
-                 }
-
-                 else if (data[i].Surname[o] != y[o])
-                 {
-                 i++;
-                 goto POINT3;
-                 }
-                 }
-
-     POINT2:
-     char buf[16];
-     strcpy(buf,empt[0].Surname);
-     Edit8->Text = buf;
-     strcpy(buf,empt[0].Name)  ;
-     Edit9->Text = buf;
-     strcpy(buf,empt[0].Otchestvo);
-     Edit10->Text = buf;
-     long d = empt[0].Zarplata;
-     Edit11->Text = d;
-     ListView1->SetFocus();
-        ListView1->Items->Item[i]->Selected=true;
-          break;
-
-         }
-         */
-
-
-
-void __fastcall TForm1::ZPpoDoljnostiClick(TObject *Sender)
+void __fastcall TSalaries_of_employees::ZPpoDoljnostiClick(TObject *Sender)
 {
   char dol[16];
    sscanf(ComboBox1->Text.c_str(), "%s", &dol);
@@ -332,7 +117,7 @@ float ave_dol = (float)sum_dol/(float)count;                 //средняя з\п по до
 
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::ZPpoRejimuClick(TObject *Sender)
+void __fastcall TSalaries_of_employees::ZPpoRejimuClick(TObject *Sender)
 {
 
 char rez = 16;
@@ -377,10 +162,8 @@ sum_rez_fl->Text = buf ;
 
 }
 //---------------------------------------------------------------------------
-
-void __fastcall TForm1::DownloadClick(TObject *Sender)
-{
- if (!OpenDialog1->Execute()) return;
+void TSalaries_of_employees:: build_massiv() {
+  if (!OpenDialog1->Execute()) return;
    FILE* inp = fopen(OpenDialog1->FileName.c_str(), "r");
 
    if (inp == NULL)
@@ -390,25 +173,24 @@ void __fastcall TForm1::DownloadClick(TObject *Sender)
    }
 
 
-
    while(!feof(inp))
    {
       memset(&data[nrec], 0, sizeof(A));
-      fscanf(inp, "%d %s %s %s %d %s %s", &data[nrec].id,&data[nrec].Surname,
+      fscanf(inp, "%s %s %s %d %s %s",&data[nrec].Surname,
              &data[nrec].Name, &data[nrec].Otchestvo, &data[nrec].Zarplata, &data[nrec].Rejim,
              &data[nrec].Doljnost);
-
-      TListItem *Item = ListView1->Items->Add();
-      Item->Caption =data[nrec].id;
-      Item->SubItems->Add(data[nrec].Surname);
-      Item->SubItems->Add(data[nrec].Name);
-      Item->SubItems->Add(data[nrec].Otchestvo);
-      Item->SubItems->Add(data[nrec].Zarplata);
-      Item->SubItems->Add(data[nrec].Rejim);
-      Item->SubItems->Add(data[nrec].Doljnost);
+                    counter++;
+                    data[nrec].id = counter;
       number_id++;
       nrec++;
    }
+   fclose(inp);
+}
+
+void __fastcall TSalaries_of_employees::DownloadClick(TObject *Sender)
+{
+   build_massiv();
+   build(data,EmploersView,true);
 
    A Mass1[100];
    A Mass2[100];
@@ -426,10 +208,12 @@ void __fastcall TForm1::DownloadClick(TObject *Sender)
      else b=false;
    }
 
-   for (int i=0;i<count;i++)
+   for (int i=0;i<count;i++)    {
    ComboBox1->Items->Add(Mass1[i].Name);
-   for (int i=0;i<count;i++)
    ComboBox4->Items->Add(Mass1[i].Name);
+   ComboBox2->Items->Add(Mass2[i].Name);
+   ComboBox3->Items->Add(Mass2[i].Name);
+   }
 
    count = 0;
    for (int i=0;i<nrec;i++)
@@ -442,27 +226,15 @@ void __fastcall TForm1::DownloadClick(TObject *Sender)
      else b=false;
    }
 
-   for (int i=0;i<count;i++)
-   ComboBox2->Items->Add(Mass2[i].Name);
-   for (int i=0;i<count;i++)
-   ComboBox3->Items->Add(Mass2[i].Name);
-
-
-
-
-
-
-
-   fclose(inp);   //считывание данных
 }
 //---------------------------------------------------------------------------
 
 
 
 //---------------------------------------------------------------------------
-__fastcall TForm1::TForm1(TComponent* Owner):TForm(Owner){}
+__fastcall TSalaries_of_employees::TSalaries_of_employees(TComponent* Owner):TForm(Owner){}
 
-void __fastcall TForm1::Button3Click(TObject *Sender)
+void __fastcall TSalaries_of_employees::Add_sotrClick(TObject *Sender)
 {
 
 if ((Edit1->Text == "")||(Edit2->Text == "")||(Edit3->Text == "")||
@@ -472,36 +244,39 @@ if ((Edit1->Text == "")||(Edit2->Text == "")||(Edit3->Text == "")||
      B_REZ = true;
      return;
    }
-                               //проверка на заполнение
 
 
-   strcpy(data[nrec].Surname,Edit1->Text.c_str());
+
+
+   for (int i = 0;i<=nrec;i++)
+   {
+   int a;
+   sscanf(Edit7->Text.c_str(),"%i",&a);
+
+
+   if((data[i].id == a))
+   {
+   ShowMessage ("Ошибка,сотрудник с таким id уже есть в базе данных");
+   return;
+   }
+
+   }
+     strcpy(data[nrec].Surname,Edit1->Text.c_str());
    strcpy(data[nrec].Name,Edit2->Text.c_str());
    strcpy(data[nrec].Otchestvo,Edit3->Text.c_str());
    sscanf(Edit4->Text.c_str(),"%d",&data[nrec].Zarplata);
-   for (int i = 0;i<nrec;i++)
-   {
-   sscanf(Edit7->Text.c_str(),"%d",&data[nrec].id);
-   if(data[i].id== data[nrec].id)
-   {
-   ShowMessage ("ERROR");
-   return;
-   }
-   else
-   sscanf(Edit7->Text.c_str(),"%d",&data[nrec].id) ;
-   }
+
+
+    sscanf(Edit7->Text.c_str(),"%d",&data[nrec].id) ;
+
+
+
    strcpy(data[nrec].Rejim,ComboBox3->Text.c_str());
    strcpy(data[nrec].Doljnost,ComboBox4->Text.c_str());  //заполнение массива
 
 
-   TListItem *Item = ListView1->Items->Add();
-   Item->Caption = data[nrec].id;
-   Item->SubItems->Add(data[nrec].Surname);
-   Item->SubItems->Add(data[nrec].Name);
-   Item->SubItems->Add(data[nrec].Otchestvo);
-   Item->SubItems->Add(data[nrec].Zarplata);    //        не строковый формат (float)
-   Item->SubItems->Add(data[nrec].Rejim);          // Режим должность в отдельный файл + сортировка + поиск
-   Item->SubItems->Add(data[nrec++].Doljnost);             //заполнение таблицы
+   build(data,EmploersView,false);
+
 
 
 
@@ -516,14 +291,14 @@ if ((Edit1->Text == "")||(Edit2->Text == "")||(Edit3->Text == "")||
 //---------------------------------------------------------------------------
 
 
-void __fastcall TForm1::DeleteZapisClick(TObject *Sender)
+void __fastcall TSalaries_of_employees::DeleteZapisClick(TObject *Sender)
 {
- if ( !ListView1->Selected == NULL)
+ if ( !EmploersView->Selected == NULL)
   if (MessageDlg("Вы точно хотите удалить запись?", mtConfirmation, TMsgDlgButtons() << mbYes << mbNo,0) == mrYes)
   {
 
 
-    int num_del = ListView1->ItemIndex;
+    int num_del = EmploersView->ItemIndex;
 
   for (int i=num_del;i<nrec-1;i++)
   {
@@ -539,27 +314,28 @@ void __fastcall TForm1::DeleteZapisClick(TObject *Sender)
     id_counter++;
   nrec--;
 
-    ListView1->Selected->Delete();
+    EmploersView->Selected->Delete();
   }
 
 
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::ClearListViewClick(TObject *Sender)
+void __fastcall TSalaries_of_employees::ClearListViewClick(TObject *Sender)
 {
- ListView1->Clear();           //очистка таблицы
+ EmploersView->Clear();           //очистка таблицы
 
    ComboBox1->Items->Clear() ;
    ComboBox2->Items->Clear() ;
    ComboBox3->Items->Clear() ;
    ComboBox4->Items->Clear() ;
    nrec=0;
+   counter = 0;
   }
 //---------------------------------------------------------------------------
 
 
-void __fastcall TForm1::SaveZarplatyClick(TObject *Sender)
+void __fastcall TSalaries_of_employees::SaveZarplatyClick(TObject *Sender)
 {
 if (!B_DOL ==true)
   {
@@ -582,21 +358,7 @@ if (!B_DOL ==true)
 //---------------------------------------------------------------------------
 
 
-//---------------------------------------------------------------------------
-
-
-
-//---------------------------------------------------------------------------
-
-
-//---------------------------------------------------------------------------
-
-
-
-
-
-
-void __fastcall TForm1::Button12Click(TObject *Sender)
+void __fastcall TSalaries_of_employees::graphClick(TObject *Sender)
 {
    Form3->Visible=true;
    Form3->Series1->Clear();
@@ -613,7 +375,7 @@ void __fastcall TForm1::Button12Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::SaveListViewClick(TObject *Sender)
+void __fastcall TSalaries_of_employees::SaveListViewClick(TObject *Sender)
 {
 if(!SaveDialog2->Execute())
 {
@@ -621,23 +383,27 @@ if(!SaveDialog2->Execute())
   }
   FILE* out = fopen(SaveDialog2->FileName.c_str(), "w");
   for (int i=0;i<nrec-1;i++)
-  fprintf(out,"%-9s %-11s %-14s %d %-9s %s\n",ListView1->Items->Item[i]->Caption.c_str(),
-  ListView1->Items->Item[i]->SubItems->Strings[0].c_str(), ListView1->Items->Item[i]->SubItems->Strings[1].c_str(),
-  StrToInt(ListView1->Items->Item[i]->SubItems->Strings[2].c_str()), ListView1->Items->Item[i]->SubItems->Strings[3].c_str(),
-  ListView1->Items->Item[i]->SubItems->Strings[4].c_str());
+  {
+  fprintf(out,"%i %-9s %-11s %-14s %i %-9s %s\n",StrToInt(EmploersView->Items->Item[i]->Caption.c_str()),
+  EmploersView->Items->Item[i]->SubItems->Strings[0].c_str(), EmploersView->Items->Item[i]->SubItems->Strings[1].c_str(),
+  EmploersView->Items->Item[i]->SubItems->Strings[2].c_str(), StrToInt(EmploersView->Items->Item[i]->SubItems->Strings[3].c_str()),
+  EmploersView->Items->Item[i]->SubItems->Strings[4].c_str(),EmploersView->Items->Item[i]->SubItems->Strings[5].c_str());
+  }
 
-  fprintf(out,"%-9s %-11s %-14s %d %-9s %s",ListView1->Items->Item[nrec-1]->Caption.c_str(),
-  ListView1->Items->Item[nrec-1]->SubItems->Strings[0].c_str(), ListView1->Items->Item[nrec-1]->SubItems->Strings[1].c_str(),
-  StrToInt(ListView1->Items->Item[nrec-1]->SubItems->Strings[2].c_str()), ListView1->Items->Item[nrec-1]->SubItems->Strings[3].c_str(),
-  ListView1->Items->Item[nrec-1]->SubItems->Strings[4].c_str());
+
+  fprintf(out,"%i %-9s %-11s %-14s %i %-9s %s",StrToInt(EmploersView->Items->Item[nrec-1]->Caption.c_str()),
+  EmploersView->Items->Item[nrec-1]->SubItems->Strings[0].c_str(), EmploersView->Items->Item[nrec-1]->SubItems->Strings[1].c_str(),
+  EmploersView->Items->Item[nrec-1]->SubItems->Strings[2].c_str(), StrToInt(EmploersView->Items->Item[nrec-1]->SubItems->Strings[3].c_str()),
+  EmploersView->Items->Item[nrec-1]->SubItems->Strings[4].c_str(),EmploersView->Items->Item[nrec-1]->SubItems->Strings[5].c_str());
   ShowMessage("Данные успешно записаны");
+
 
   fclose(out);
 }
 //---------------------------------------------------------------------------
 
 
-void __fastcall TForm1::Button1Click(TObject *Sender)
+void __fastcall TSalaries_of_employees::add_dol_rezClick(TObject *Sender)
 {
 if ((Edit5->Text == "")||(Edit6->Text == ""))
 {
@@ -659,7 +425,7 @@ ShowMessage("Режим работы и должность успешно добавлены");
 
 
 
-void __fastcall TForm1::ListView1ColumnClick(TObject *Sender,
+void __fastcall TSalaries_of_employees::EmploersViewColumnClick(TObject *Sender,
       TListColumn *Column)
 {
 if ((rev==true)||(ColumnToSort != Column->Index)){rev=false;}
@@ -669,7 +435,7 @@ if ((rev==true)||(ColumnToSort != Column->Index)){rev=false;}
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::ListView1Compare(TObject *Sender, TListItem *Item1,
+void __fastcall TSalaries_of_employees::EmploersViewCompare(TObject *Sender, TListItem *Item1,
       TListItem *Item2, int Data, int &Compare)
 {
 if (ColumnToSort == 0)
@@ -685,7 +451,7 @@ CompareText(Item1->SubItems->Strings[ix], Item2->SubItems->Strings[ix]);
 
 
 
-void __fastcall TForm1::Edit4KeyPress(TObject *Sender, char &Key)
+void __fastcall TSalaries_of_employees::Edit4KeyPress(TObject *Sender, char &Key)
 {
     if(IsCharAlpha(Key))
      {
@@ -699,7 +465,7 @@ void __fastcall TForm1::Edit4KeyPress(TObject *Sender, char &Key)
 
 
 
-void __fastcall TForm1::Button5Click(TObject *Sender)
+void __fastcall TSalaries_of_employees::zp_po_dolClick(TObject *Sender)
 {
  char dol[16];
    sscanf(ComboBox1->Text.c_str(), "%s", &dol);
@@ -740,7 +506,7 @@ float ave_dol = (float)sum_dol/(float)count;                 //средняя з\п по до
 //---------------------------------------------------------------------------
 
 
-void __fastcall TForm1::Button6Click(TObject *Sender)
+void __fastcall TSalaries_of_employees::zp_po_rejClick(TObject *Sender)
 {
 char rez = 16;
 char *ptr = NULL;
@@ -784,43 +550,109 @@ sum_rez_fl->Text = buf ;
 //---------------------------------------------------------------------------
 
 
-void __fastcall TForm1::Button7Click(TObject *Sender)
+void __fastcall TSalaries_of_employees::Delete_bez_zpClick(TObject *Sender)
 {
-int i = 0;
-while(i<nrec)
-{
- TListItem *Item = ListView1->Items->Add();
-      Item->Caption =data[i].Surname;
+if ( !Emploers_no_zp->Selected == NULL)
+  if (MessageDlg("Вы точно хотите удалить запись?", mtConfirmation, TMsgDlgButtons() << mbYes << mbNo,0) == mrYes)
+  {
+
+
+    int num_del = Emploers_no_zp->ItemIndex;
+
+  for (int i=num_del;i<cgounter_for_id-1;i++)
+  {
+     strcpy(bezZP[i].Surname,bezZP[i+1].Surname);
+     strcpy(bezZP[i].Name,bezZP[i+1].Name);
+     strcpy(bezZP[i].Otchestvo,bezZP[i+1].Otchestvo);
+     bezZP[i].Zarplata  = bezZP[i+1].Zarplata;
+     strcpy(bezZP[i].Rejim,bezZP[i+1].Rejim);
+     strcpy(bezZP[i].Doljnost,bezZP[i+1].Doljnost);
+     bezZP[i].id = bezZP[i+1].id;
+  }
+    cgounter_for_id--;
+
+    Emploers_no_zp->Selected->Delete();
+  }
+
+}
+//---------------------------------------------------------------------------
+  void TSalaries_of_employees::build_for_search(int i)
+   {
+          TListItem *Item = EmploersView->Items->Add();
+     Item->Caption =data[i].id;
+      Item->SubItems->Add(data[i].Surname);
       Item->SubItems->Add(data[i].Name);
       Item->SubItems->Add(data[i].Otchestvo);
       Item->SubItems->Add(data[i].Zarplata);
       Item->SubItems->Add(data[i].Rejim);
       Item->SubItems->Add(data[i].Doljnost);
-      i++  ;
-}
-}
-//---------------------------------------------------------------------------
+  }
+  void TSalaries_of_employees::build(A *uk,TListView * lst,bool type)   {
+  if(type){
+   for(int i = 0; i<nrec;i++){
+   TListItem *Item = lst->Items->Add();
+    Item->Caption =uk[i].id;
+      Item->SubItems->Add(uk[i].Surname);
+      Item->SubItems->Add(uk[i].Name);
+      Item->SubItems->Add(uk[i].Otchestvo);
+      Item->SubItems->Add(uk[i].Zarplata);
+      Item->SubItems->Add(uk[i].Rejim);
+      Item->SubItems->Add(uk[i].Doljnost);
+      }
+      }
+      else
+      {
+        TListItem *Item = lst->Items->Add();
+    Item->Caption =data[nrec].id;
+      Item->SubItems->Add(uk[nrec].Surname);
+      Item->SubItems->Add(uk[nrec].Name);
+      Item->SubItems->Add(uk[nrec].Otchestvo);
+      Item->SubItems->Add(uk[nrec].Zarplata);
+      Item->SubItems->Add(uk[nrec].Rejim);
+      Item->SubItems->Add(uk[nrec++].Doljnost);
+      }
 
+  }
 
-void TForm1::search_2()
+ void TSalaries_of_employees::build_lv_nozp()
+ {
+       TListItem *Item = Emploers_no_zp->Items->Add();
+      Item->Caption =bezZP[nrec2].id;
+      Item->SubItems->Add(bezZP[nrec2].Surname);
+      Item->SubItems->Add(bezZP[nrec2].Name);
+      Item->SubItems->Add(bezZP[nrec2].Otchestvo);
+      Item->SubItems->Add(bezZP[nrec2].Rejim);
+      Item->SubItems->Add(bezZP[nrec2].Doljnost);
+ }
+ void TSalaries_of_employees::download_no_zp()
+ {
+  if (!OpenDialog1->Execute()) return;
+   FILE* inp = fopen(OpenDialog1->FileName.c_str(), "r");
+
+   if (inp == NULL)
+   {
+      ShowMessage("Файл не найден");
+      return;
+   }
+
+ while(!feof(inp))
+   {
+      fscanf(inp, "%s %s %s %s %s",&bezZP[nrec2].Surname,
+             &bezZP[nrec2].Name, &bezZP[nrec2].Otchestvo,&bezZP[nrec2].Rejim,
+             &bezZP[nrec2].Doljnost);
+             counter++;
+      bezZP[nrec2].id = counter;
+      build_lv_nozp();
+      nrec2++;
+   }
+ }
+
+void TSalaries_of_employees::search_2()
 {
-  /*
-char b[16] = "Sqew";
-char *c = new char[Edit8->Text.Length()+1];
-strcpy(c, Edit8->Text.c_str());
-int p = Edit8->Text.Length();
-        if (strncmp(b,c,p)==0)
-        {
-              ShowMessage("GOOD");
-        }
-        else
-        ShowMessage("afaf");
 
-           */
         char *stroka = new char[Edit14->Text.Length()+1]; // массив со строкой
         strcpy(stroka, Edit14->Text.c_str());
         int p = Edit14->Text.Length(); // длина строки
-        int d = nrec;
   for(int i = 0;i<nrec;i++)
   {
         if(strncmp(data[i].Surname,stroka,p)==0)
@@ -832,20 +664,14 @@ int p = Edit8->Text.Length();
         strcpy(dat[pp].rejim,data[i].Rejim);
         strcpy(dat[pp].doljnost,data[i].Doljnost);
 
-          TListItem *Item = ListView1->Items->Add();
-      Item->Caption =data[i].Surname;
-      Item->SubItems->Add(data[i].Name);
-      Item->SubItems->Add(data[i].Otchestvo);
-      Item->SubItems->Add(data[i].Zarplata);
-      Item->SubItems->Add(data[i].Rejim);
-      Item->SubItems->Add(data[i].Doljnost);
-        d++;
+         build_for_search(i);
+
         pp++;
       }
   }
   for(int i = 0;i<nrec;i++)
   {
-   ListView1->Items->Item[0]->Delete();
+   EmploersView->Items->Item[0]->Delete();
   }
    ComboBox1->Items->Clear() ;
    ComboBox2->Items->Clear() ;
@@ -868,10 +694,10 @@ int p = Edit8->Text.Length();
      else b=false;
    }
 
-   for (int i=0;i<count;i++)
+   for (int i=0;i<count;i++)  {
    ComboBox1->Items->Add(Mass1[i].Name);
-   for (int i=0;i<count;i++)
    ComboBox4->Items->Add(Mass1[i].Name);
+   }
 
    count = 0;
    for (int i=0;i<pp;i++)
@@ -885,17 +711,18 @@ int p = Edit8->Text.Length();
    }
 
    for (int i=0;i<count;i++)
+   {
    ComboBox2->Items->Add(Mass2[i].Name);
-   for (int i=0;i<count;i++)
    ComboBox3->Items->Add(Mass2[i].Name);
+   }
 
 }
 
 
-void __fastcall TForm1::Button9Click(TObject *Sender)
+void __fastcall TSalaries_of_employees::searchClick(TObject *Sender)
 {
-Button5->Visible = true;
-Button6->Visible = true;
+zp_po_dol->Visible = true;
+zp_po_rej->Visible = true;
 ZPpoDoljnosti->Visible = false;
 ZPpoRejimu->Visible = false;
 
@@ -907,29 +734,19 @@ search_2();
 
 
 
-void __fastcall TForm1::Button10Click(TObject *Sender)
+void __fastcall TSalaries_of_employees::return_tableClick(TObject *Sender)
 {
 ComboBox1->Items->Clear() ;
 ComboBox2->Items->Clear() ;
 ComboBox3->Items->Clear() ;
 ComboBox4->Items->Clear() ;
- ListView1->Clear();
+ EmploersView->Clear();
  pp = 0;
- Button5->Visible = false;
- Button6->Visible = false;
+ zp_po_dol->Visible = false;
+ zp_po_rej->Visible = false;
  ZPpoDoljnosti->Visible = true;
  ZPpoRejimu->Visible = true;
- for(int i = 0;i<nrec;i++)
- {
-  TListItem *Item = ListView1->Items->Add();
-      Item->Caption =data[i].id;
-      Item->SubItems->Add(data[i].Surname);
-      Item->SubItems->Add(data[i].Name);
-      Item->SubItems->Add(data[i].Otchestvo);
-      Item->SubItems->Add(data[i].Zarplata);
-      Item->SubItems->Add(data[i].Rejim);
-      Item->SubItems->Add(data[i].Doljnost);
- }
+ build(data,EmploersView,true);
 
 
  A Mass1[100];
@@ -976,32 +793,297 @@ ComboBox4->Items->Clear() ;
 
 
 
-void __fastcall TForm1::Button2Click(TObject *Sender)
+void __fastcall TSalaries_of_employees::download_zpClick(TObject *Sender)
 {
+cgounter_for_id = 0;
 if (!OpenDialog1->Execute()) return;
    FILE* inp = fopen(OpenDialog1->FileName.c_str(), "r");
 
    if (inp == NULL)
    {
-      ShowMessage("Файл не найден");      
+      ShowMessage("Файл не найден");
       return;
    }
 
-for (int i = 0;i<nrec;i++)
+   while(!feof(inp))
    {
-      fscanf(inp, "%d %d %d %d %d ", &ZP[i].Jan,&ZP[i].Feb,
-             &ZP[i].Mar, &ZP[i].Apr, &ZP[i].May);
-                   TListItem *Item = Form5->ListView2->Items->Add();
-      Item->Caption =data[i].id;
+     fscanf(inp, "%d %d %d %d %d %d ",&ZP[cgounter_for_id].pers, &ZP[cgounter_for_id].Jan,&ZP[cgounter_for_id].Feb,
+   &ZP[cgounter_for_id].Mar, &ZP[cgounter_for_id].Apr, &ZP[cgounter_for_id].May);
+   cgounter_for_id++;
+   }
+   for (int i = 0;i<cgounter_for_id;i++)
+   {
+   for(int j = 0;j<cgounter_for_id;j++)
+   {
+   int ct = 0;
+    if (bezZP[i].id == ZP[j].pers)
+    {
+     for(int k = 0;k<nrec;k++){
+   if (bezZP[i].id == data[k].id )
+   {
+   ct = 1;
+   }
+   }
+   if(ct == 0 )
+   {
+       data[nrec].id = bezZP[i].id ;
+       strcpy(data[nrec].Surname,bezZP[i].Surname);
+       strcpy(data[nrec].Name,bezZP[i].Name);
+       strcpy(data[nrec].Otchestvo,bezZP[i].Otchestvo);
+       strcpy(data[nrec].Rejim,bezZP[i].Rejim);
+       strcpy(data[nrec].Doljnost,bezZP[i].Doljnost);
+       char buf[1024];
+       sprintf(buf, "Введите зарплату  %s %s %s", data[nrec].Surname,
+         data[nrec].Name,
+         data[nrec].Otchestvo);
+
+         AnsiString InputString = InputBox("Зарплата", buf,"");
+         int zp = StrToInt(InputString);
+         data[nrec].Zarplata = zp;
+          build(data,EmploersView,false);
+         break;
+         }
+         }
+    }
+   }
+
+
+for (int i = 0;i<cgounter_for_id;i++)
+   {
+
+       for (int j = 0; j<nrec;j++)
+       {
+
+       if (ZP[i].pers==data[j].id)
+       {
+       int countof = 0;
+       for(int i  = 0 ; i<16;i++)
+       {
+       if(data[j].Surname[i]=='\0')
+       break;
+       countof++;
+       }
+       strcpy(ZP[i].name_surname,data[j].Surname );
+       ZP[i].name_surname[countof] = ' ';
+       ZP[i].name_surname[countof+1] = data[j].Name[0];
+       ZP[i].name_surname[countof+2] = '.';
+       ZP[i].name_surname[countof+3] = data[j].Otchestvo[0];
+       build_lv3(ZP,i);
+         break;
+         }
+
+       }
+
+
+             }
+
+
+}
+//---------------------------------------------------------------------------
+
+
+
+
+
+
+void __fastcall TSalaries_of_employees::TabSheet2Show(TObject *Sender)
+{
+main->Visible = false;
+Panel1->Visible = true;
+clear_table->Visible = false;
+PageControl1->Width =929;
+PageControl1->Height = 321;
+}
+//---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TSalaries_of_employees::TabSheet1Show(TObject *Sender)
+{
+main->Visible = true;
+Panel1->Visible = false;
+clear_table->Visible = false;
+Emploers_no_zp->Width =561;
+PageControl1->Width =569;
+PageControl1->Height = 321;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TSalaries_of_employees::download_nozpClick(TObject *Sender)
+{
+download_no_zp();
+}
+
+//---------------------------------------------------------------------------
+
+
+void __fastcall TSalaries_of_employees::TabSheet3Show(TObject *Sender)
+{
+main->Visible = false;
+Panel1->Visible = false;
+clear_table->Visible = true;
+PageControl1->Width =929;
+PageControl1->Height = 321;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TSalaries_of_employees::changeClick(TObject *Sender)
+{
+if (!EmploersView->Selected == NULL) {
+
+int nomerlist = EmploersView->Selected->Index;
+selected = nomerlist;
+Edit1->Text = data[nomerlist].Surname;
+Edit2->Text = data[nomerlist].Name;
+Edit3->Text = data[nomerlist].Otchestvo;
+Edit4->Text = data[nomerlist].Zarplata;
+ComboBox3->Text = data[nomerlist].Rejim;
+ComboBox4->Text = data[nomerlist].Doljnost;
+}
+
+else
+ShowMessage ("Выбирете сотрудника");
+}
+//---------------------------------------------------------------------------
+void TSalaries_of_employees::build_listv3()
+{
+
+ for(int i = 0;i<cgounter_for_id;i++) {
+
+   for (int j = 0; j<nrec;j++)
+       {
+
+       if (ZP[i].pers==data[j].id)
+       {
+       TListItem *Item = ListView3->Items->Add();
+      Item->Caption =ZP[i].pers;
+      Item->SubItems->Add(ZP[i].name_surname);
       Item->SubItems->Add(ZP[i].Jan);
       Item->SubItems->Add(ZP[i].Feb);
       Item->SubItems->Add(ZP[i].Mar);
       Item->SubItems->Add(ZP[i].Apr);
       Item->SubItems->Add(ZP[i].May);
-             }
-          Form5->Visible = true;
+         break;
+         }
+
+       }
+
+
+
+      }
+}
+void TSalaries_of_employees::build_lv3(D * uk,int i)
+{
+   TListItem *Item = ListView3->Items->Add();
+      Item->Caption =uk[i].pers;
+      Item->SubItems->Add(uk[i].name_surname);
+      Item->SubItems->Add(uk[i].Jan);
+      Item->SubItems->Add(uk[i].Feb);
+      Item->SubItems->Add(uk[i].Mar);
+      Item->SubItems->Add(uk[i].Apr);
+      Item->SubItems->Add(uk[i].May);
+}
+
+ void TSalaries_of_employees::build_MandL3() {
+
+  for(int i = 0;i<cgounter_for_id;i++){
+ if (data[selected].id == ZP[i].pers){
+ int countof = 0;
+       for(int j  = 0 ; j<16;j++)
+       {
+       if(data[selected].Surname[j]=='\0')
+       break;
+       countof++;
+       }
+       strcpy(ZP[i].name_surname,data[selected].Surname);
+       ZP[i].name_surname[countof] = ' ';
+       ZP[i].name_surname[countof+1] = data[selected].Name[0];
+       ZP[i].name_surname[countof+2] = '.';
+       ZP[i].name_surname[countof+3] = data[selected].Otchestvo[0];
+       break;
+ }
+}
+
+ }
+
+void __fastcall TSalaries_of_employees::change_sotrClick(TObject *Sender)
+{
+
+strcpy(data[selected].Surname,Edit1->Text.c_str());
+strcpy(data[selected].Name,Edit2->Text.c_str());
+strcpy(data[selected].Otchestvo,Edit3->Text.c_str());
+sscanf(Edit4->Text.c_str(),"%d",&data[selected].Zarplata);
+strcpy(data[selected].Rejim,ComboBox3->Text.c_str());
+strcpy(data[selected].Doljnost,ComboBox4->Text.c_str());
+
+build_MandL3();
+
+
+
+EmploersView->Clear();
+
+build(data,EmploersView,true);
+
+  ShowMessage(ZP[selected].name_surname);
+
+ ListView3->Clear();
+
+
+build_listv3();
+
 
 
 }
 //---------------------------------------------------------------------------
+
+void __fastcall TSalaries_of_employees::clear_tableClick(TObject *Sender)
+{
+  ListView3->Clear();
+}
+//---------------------------------------------------------------------------
+
+void TSalaries_of_employees::sortirovka(bool param)
+{
+A exsort1[100];
+
+for (int i = 0;i<nrec;i++)
+exsort1[i] = data[i];
+ for (int i = 0 ; i < nrec ; i++) {
+  for (int j = (i+1) ; j<nrec; j++)
+  {
+  switch(param){
+  case true:
+    if (exsort1[i].Zarplata > exsort1[j].Zarplata)
+   swap(exsort1[i],exsort1[j])  ;
+   break;
+   case false:
+     if (exsort1[i].Surname[0] > exsort1[j].Surname[0])
+   swap(exsort1[i],exsort1[j])  ;
+   break;
+   }
+  }
+       sort[i] = exsort1[i];
+ }
+ EmploersView->Clear();
+     build(sort,EmploersView,true);
+}
+
+void __fastcall TSalaries_of_employees::SortClick(TObject *Sender)
+{
+switch(Sortirovka->ItemIndex){
+ case 0 :
+ sortirovka(false);
+ break;
+ case 1 :
+ sortirovka(true);
+ break;
+}
+}
+//---------------------------------------------------------------------------
+
+
+
 

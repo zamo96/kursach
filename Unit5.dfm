@@ -1,8 +1,8 @@
 object Form5: TForm5
-  Left = 260
-  Top = 519
-  Width = 699
-  Height = 371
+  Left = 486
+  Top = 340
+  Width = 629
+  Height = 331
   Caption = 'Form5'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,9 +16,10 @@ object Form5: TForm5
   TextHeight = 13
   object ListView2: TListView
     Left = 0
-    Top = -4
-    Width = 681
-    Height = 337
+    Top = 0
+    Width = 613
+    Height = 293
+    Align = alClient
     Checkboxes = True
     Columns = <
       item

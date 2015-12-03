@@ -30,13 +30,14 @@
     <USERDEFINES value="_DEBUG"/>
     <SYSDEFINES value="_RTLDLL;NO_STRICT;USEPACKAGES"/>
     <MAINSOURCE value="Project2.cpp"/>
-    <INCLUDEPATH value="&quot;X:\Курсовая показать\kursach&quot;;..\CBuilder6\Projects;..\inform;..\CBuilder6\Bin;..\..\inform;$(BCB)\include;$(BCB)\include\vcl"/>
-    <LIBPATH value="&quot;X:\Курсовая показать\kursach&quot;;..\CBuilder6\Projects;..\inform;..\CBuilder6\Bin;..\..\inform;$(BCB)\lib\obj;$(BCB)\lib"/>
+    <INCLUDEPATH value="&quot;C:\Program Files (x86)\Borland\CBuilder6\Projects&quot;;&quot;X:\Курсовая показать\kursach&quot;;..\CBuilder6\Projects;..\inform;..\CBuilder6\Bin;..\..\inform;$(BCB)\include;$(BCB)\include\vcl"/>
+    <LIBPATH value="&quot;C:\Program Files (x86)\Borland\CBuilder6\Projects&quot;;&quot;X:\Курсовая показать\kursach&quot;;..\CBuilder6\Projects;..\inform;..\CBuilder6\Bin;..\..\inform;$(BCB)\lib\obj;$(BCB)\lib"/>
     <WARNINGS value="-w-par"/>
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <IDLCFLAGS value="-I&quot;X:\Курсовая показать\kursach&quot; -I..\CBuilder6\Projects -I..\inform 
+    <IDLCFLAGS value="-I&quot;C:\Program Files (x86)\Borland\CBuilder6\Projects&quot; 
+      -I&quot;X:\Курсовая показать\kursach&quot; -I..\CBuilder6\Projects -I..\inform 
       -I..\CBuilder6\Bin -I..\..\inform -I$(BCB)\include -I$(BCB)\include\vcl 
       -src_suffix cpp -D_DEBUG -boa"/>
     <CFLAG1 value="-Od -H=$(BCB)\lib\vcl60.csm -Hc -Vx -Ve -X- -r- -a8 -b- -k -y -v -vi- -c 
@@ -56,7 +57,7 @@
   <FILELIST>
       <FILE FILENAME="Project2.res" FORMNAME="" UNITNAME="Project2.res" CONTAINERID="ResTool" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Project2.cpp" FORMNAME="" UNITNAME="Project2" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="Unit1.cpp" FORMNAME="Form1" UNITNAME="Unit1" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Unit1.cpp" FORMNAME="Salaries_of_employees" UNITNAME="Unit1" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Unit3.cpp" FORMNAME="Form3" UNITNAME="Unit3" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="Unit5.cpp" FORMNAME="Form5" UNITNAME="Unit5" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
